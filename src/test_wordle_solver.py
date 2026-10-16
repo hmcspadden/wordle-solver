@@ -11,13 +11,21 @@ class TestWordleSolver(unittest.TestCase):
     def test_grey(self):
         solver = WordleSolver()
         solver.grey = ["a", "e", "i", "o", "u"]
-        print(solver.find_matches())
+        #print(solver.find_matches())
 
     def test_match_yellows(self):
         solver = WordleSolver()
-        solver.yellow = {"a" : [2, 4], "e" : [2, 4]}
-        solver.grey = ["i", "o", "u", "y"]
-        print(solver.find_matches())
+        solver.green = {0 : "c"}
+        solver.yellow = {"a" : [2, 4]}
+        solver.grey = ["i", "o", "u", "y", "e"]
+        #print(solver.find_matches())
+
+    def test_best_match(self):
+        solver = WordleSolver()
+        matches = solver.find_matches()
+        print(solver.best_match(matches))
+        for pos in solver.pos_char_freq:
+            print(f"{pos}\n")
 
 if __name__ == '__main__':
     unittest.main()
