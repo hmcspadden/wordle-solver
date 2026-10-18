@@ -5,8 +5,12 @@ class TestWordleSolver(unittest.TestCase):
     def test_match_green(self):
         solver = WordleSolver()
         solver.green = {0 : "s", 1 : "t", 2 : "a", 3 : "r", 4 : "e"}
-        print(solver.find_matches())
         self.assertEqual(["stare"], solver.find_matches())
+
+        solver2 = WordleSolver()
+        solver2.green = {0 : "s", 1 : "t", 2 : "a", 3 : "r", 4 : "e"}
+        solver2.grey = ["a", "e"]
+        self.assertEqual(["stare"], solver2.find_matches())
 
     def test_grey(self):
         solver = WordleSolver()
@@ -20,12 +24,15 @@ class TestWordleSolver(unittest.TestCase):
         solver.grey = ["i", "o", "u", "y", "e"]
         #print(solver.find_matches())
 
+        solver2 = WordleSolver()
+        solver2.green = {0 : "p", 4 : "e"}
+        solver2.yellow = {"e" : [1]}
+        print(solver2.find_matches())
+
     def test_best_match(self):
         solver = WordleSolver()
         matches = solver.find_matches()
         print(solver.best_match(matches))
-        for pos in solver.pos_char_freq:
-            print(f"{pos}\n")
 
 if __name__ == '__main__':
     unittest.main()

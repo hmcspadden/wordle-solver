@@ -15,6 +15,20 @@ def build_word_list(filepath: str) -> list[str]:
     words = read_text(filepath)
     return words.split("\n")
 
+#counts frequency of characters across all valid answers
+def char_frequency(words: list[str]) -> dict[str, int]:
+    frequency = {}
+
+    for word in words:
+        for char in word:
+            if char not in frequency:
+                frequency[char] = 0
+            frequency[char] += 1
+
+    frequency = dict(sorted(frequency.items(), key=lambda x: x[1], reverse=True))
+
+    return frequency
+
 #builds matrix of characters ranked by positional frequency
 def positional_char_frequency(words: list[str]) -> list[list[str]]:
     positional_frequency = {}

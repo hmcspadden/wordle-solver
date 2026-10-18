@@ -3,6 +3,7 @@ from word_list import *
 class WordleSolver():
     def __init__(self):
         self.word_list: list[str] = build_word_list("./assets/data/wordle-answers.txt")
+        self.char_freq: dict [str, int] = char_frequency(self.word_list)
         self.pos_char_freq: list[list[str]] = positional_char_frequency(self.word_list)
         self.current_word: str | None = None
         self.green: dict[int, str] = {}
@@ -28,7 +29,7 @@ class WordleSolver():
             
             #check if char in incorrect guesses
             for char in word:
-                if char in self.grey:
+                if char in self.grey and char not in self.green.values():
                     match = False
                     break
             if not match:
@@ -36,7 +37,10 @@ class WordleSolver():
 
             #check if word has char in pos of yellow
             for char, positions in self.yellow.items():
-                if char in word and word.index(char) not in positions:
+                if char in word and word.index(char) in positions:
+                    match = False
+                    break
+                if char in self.green.values() and word.count(char) <= 1:
                     match = False
                     break
             if not match:
@@ -45,6 +49,23 @@ class WordleSolver():
             matches.append(word)
 
         return matches
+
+    def word_score(self, words: list[str]) -> dict[str, int]:
+        word_scores = {}
+
+        for word in words:
+            score = 0
+
+            #calculate positional score for each letter and add total word score
+            for i in range(len(word)):
+                score += 26 - self.pos_char_freq[i].index(word[i])
+
+            word_scores[word] = score
+        
+        top_five = dict(sorted(word_scores.items(), key=lambda x: x[1], reverse=True)[:5])
+
+        return top_five
+
 
     #finds the word with highest positional score in a word list
     def best_match(self, words: list[str]) -> str:
@@ -62,4 +83,6 @@ class WordleSolver():
         highest_score = max(word_scores, key=word_scores.get)
         
         return highest_score
+
+    
             
