@@ -9,6 +9,8 @@ class Wordle():
 
     #compares the input guess to the correct answer    
     def score_guess(self, word: str) -> list[str]:
+        if self.guess_count >= 6:
+            return
         score = []
         char_count = {} #variable to keep track of double letter guesses
 
@@ -34,4 +36,18 @@ class Wordle():
                 score[i] = "Y"
                 char_count[word[i]] += 1
 
+        self.guess_count += 1
+        result = "\n"
+        for pos in score:
+            result += f"{pos} "
+        print(result)
+        self.assert_win(score)
+
         return score
+
+    def assert_win(self, score: list[str]) -> None:
+        if self.guess_count >= 6 and score != ["G", "G", "G", "G", "G"]:
+            print(f"\nTry again tomorrow..\n\nToday's word: {self.answer}")
+        elif score == ["G", "G", "G", "G", "G"]:
+            print(f"\nYou Win!\n\nToday's word: {self.answer}")
+            self.guess_count = 7

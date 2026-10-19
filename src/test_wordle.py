@@ -1,5 +1,6 @@
 import unittest
 from wordle import *
+from wordle_solver import WordleSolver
 
 class TestWordle(unittest.TestCase):
     def test_init(self):
@@ -22,6 +23,15 @@ class TestWordle(unittest.TestCase):
         wordle4 = Wordle()
         wordle4.answer = "booze"
         self.assertEqual(["X", "G", "X", "X", "Y"], wordle4.score_guess("condo"))
+
+    def test_assert_win(self):
+        wordle = Wordle()
+        solver = WordleSolver()
+        wordle.guess_count = 5
+        wordle.score_guess(solver.best_match(solver.find_matches()))
+
+        wordle.guess_count = 2
+        wordle.score_guess(wordle.answer)
 
 
 if __name__ == '__main__':
