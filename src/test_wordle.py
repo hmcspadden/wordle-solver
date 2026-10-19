@@ -19,5 +19,10 @@ class TestWordle(unittest.TestCase):
         wordle3.answer = "prone"
         self.assertEqual(["G", "X", "Y", "X", "G"], wordle3.score_guess("puree"))
 
+        wordle4 = Wordle()
+        wordle4.answer = "booze"
+        self.assertEqual(["X", "G", "X", "X", "Y"], wordle4.score_guess("condo"))
+
+
 if __name__ == '__main__':
     unittest.main()

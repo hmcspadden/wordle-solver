@@ -1,5 +1,6 @@
 import unittest
 from wordle_solver import WordleSolver
+from wordle import Wordle
 
 class TestWordleSolver(unittest.TestCase):
     def test_match_green(self):
@@ -27,12 +28,31 @@ class TestWordleSolver(unittest.TestCase):
         solver2 = WordleSolver()
         solver2.green = {0 : "p", 4 : "e"}
         solver2.yellow = {"e" : [1]}
-        print(solver2.find_matches())
+        #print(solver2.find_matches())
 
     def test_best_match(self):
         solver = WordleSolver()
         matches = solver.find_matches()
-        print(solver.best_match(matches))
+        #print(solver.best_match(matches))
+
+    def test_update_gyg(self):
+        solver = WordleSolver()
+        wordle = Wordle()
+        wordle.answer = "stare"
+        first_guess = solver.best_match(solver.find_matches())
+        solver.update_GYG(wordle.score_guess(first_guess))
+        self.assertEqual(
+            {2 : "a", 4 : "e"},
+            solver.green
+        )
+        self.assertEqual(
+            {"r" : [1]},
+            solver.yellow
+        )
+        self.assertEqual(
+            ["c", "n"],
+            solver.grey
+        )
 
 if __name__ == '__main__':
     unittest.main()

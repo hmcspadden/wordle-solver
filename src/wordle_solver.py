@@ -81,8 +81,21 @@ class WordleSolver():
             word_scores[word] = score
 
         highest_score = max(word_scores, key=word_scores.get)
+        self.current_word = highest_score
         
         return highest_score
+
+    #updates green, yellow, grey fields based on scored guess
+    def update_GYG(self, score: list[str]) -> None:
+        for i in range(len(score)):
+            if score[i] == "G":
+                self.green[i] = self.current_word[i]
+            elif score[i] == "Y":
+                if self.current_word[i] not in self.yellow:
+                    self.yellow[self.current_word[i]] = []
+                self.yellow[self.current_word[i]].append(i)
+            else:
+                self.grey.append(self.current_word[i])
 
     
             
