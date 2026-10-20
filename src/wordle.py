@@ -37,7 +37,7 @@ class Wordle():
                 char_count[word[i]] += 1
 
         self.guess_count += 1
-        result = "\n"
+        result = ""
         for pos in score:
             result += f"{pos} "
         print(result)
@@ -51,3 +51,4 @@ class Wordle():
         elif score == ["G", "G", "G", "G", "G"]:
             print(f"\nYou Win!\n\nToday's word: {self.answer}")
             self.guess_count = 7
+

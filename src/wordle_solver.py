@@ -32,6 +32,9 @@ class WordleSolver():
                 if char in self.grey and char not in self.green.values():
                     match = False
                     break
+                elif char in self.grey and word.count(char) > str(self.green.values()).count(char):
+                    match = False
+                    break
             if not match:
                 continue
 
@@ -46,6 +49,7 @@ class WordleSolver():
             if not match:
                 continue
 
+            
             matches.append(word)
 
         return matches
@@ -82,6 +86,7 @@ class WordleSolver():
 
         highest_score = max(word_scores, key=word_scores.get)
         self.current_word = highest_score
+        print(f"\n{highest_score}")
         
         return highest_score
 
