@@ -40,12 +40,22 @@ class WordleSolver():
 
             #check if word has char in pos of yellow
             for char, positions in self.yellow.items():
-                if char in word and word.index(char) in positions:
-                    match = False
-                    break
-                if char in self.green.values() and word.count(char) <= 1:
-                    match = False
-                    break
+                if word.count(char) > 0:
+                    for i in range(len(word)):
+                        if char == word[i] and i in positions:
+                            match = False
+                            break
+            if not match:
+                continue
+
+            #check if word has yellow that are not yet green
+            if len(self.yellow) > 0:
+                for char in self.yellow:
+                    if char in self.green.values():
+                        continue
+                    if char not in word:
+                        match = False
+                        break
             if not match:
                 continue
 

@@ -45,6 +45,7 @@ class Wordle():
 
         return score
 
+    #checks if the answer has been guessed and issues a loss if max guesses are reached
     def assert_win(self, score: list[str]) -> None:
         if self.guess_count >= 6 and score != ["G", "G", "G", "G", "G"]:
             print(f"\nTry again tomorrow..\n\nToday's word: {self.answer}")
