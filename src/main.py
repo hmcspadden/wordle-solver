@@ -4,9 +4,8 @@ from wordle_solver import WordleSolver
 def main():
     wordle = Wordle()
     solver = WordleSolver()
-    wordle.answer = "waste"
 
-    while wordle.guess_count < 6:
+    while not wordle.game_completed:
         solver.update_GYG(wordle.score_guess(solver.best_match(solver.find_matches())))
 
 main()

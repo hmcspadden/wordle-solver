@@ -32,9 +32,7 @@ class WordleSolver():
                 if char in self.grey and char not in self.green.values():
                     match = False
                     break
-                elif char in self.grey and word.count(char) > str(self.green.values()).count(char):
-                    match = False
-                    break
+                
             if not match:
                 continue
 
@@ -111,6 +109,18 @@ class WordleSolver():
                 self.yellow[self.current_word[i]].append(i)
             else:
                 self.grey.append(self.current_word[i])
+
+        #trying to fix obsolete guesses(green but no extras)
+        for char in self.current_word:
+            if char in self.green.values() and char in self.grey:
+                for pos, ch in self.green.items():
+                    if char == ch:
+                        if char not in self.yellow:
+                            self.yellow[char] = []
+                        for i in range(5):
+                            if i != pos and i not in self.yellow[char]:
+                                self.yellow[char].append(i)
+
 
     
             

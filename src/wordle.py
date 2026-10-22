@@ -6,6 +6,7 @@ class Wordle():
         self.word_list: list[str] = build_word_list("./assets/data/wordle-answers.txt")
         self.answer: str = self.word_list[random.randrange(0, len(self.word_list))]
         self.guess_count: int = 0
+        self.game_completed: bool = False 
 
     #compares the input guess to the correct answer    
     def score_guess(self, word: str) -> list[str]:
@@ -49,7 +50,9 @@ class Wordle():
     def assert_win(self, score: list[str]) -> None:
         if self.guess_count >= 6 and score != ["G", "G", "G", "G", "G"]:
             print(f"\nTry again tomorrow..\n\nToday's word: {self.answer}")
+            self.game_completed = True
+            self.guess_count = 7
         elif score == ["G", "G", "G", "G", "G"]:
             print(f"\nYou Win!\n\nToday's word: {self.answer}")
-            self.guess_count = 7
+            self.game_completed = True
 
